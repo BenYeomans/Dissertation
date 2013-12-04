@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
+using System.IO;
+
 
 namespace Aerial_Imaging_UAV_Simulator
 {
@@ -60,9 +63,45 @@ namespace Aerial_Imaging_UAV_Simulator
            latitude2 = double.Parse(latitude);
            longitude2 = double.Parse(longitude);
 
-           userControl11.setLocation(latitude2, longitude2);
+           userControl11.setLocation(latitude2, longitude2 , 18);
+           
         }
 
+        private void takeImage_Click(object sender, EventArgs e)
+        {
+            string latitude;
+            string longitude;
+            double latitude2;
+            double longitude2;
+
+          
+          
+
+            latitude = latTxtBox.Text;
+            longitude = longTxtBox.Text;
+
+            latitude2 = double.Parse(latitude);
+            longitude2 = double.Parse(longitude);
+
+            
+            string image = userControl11.GetImagery(latitude2, longitude2);
+            userControl11.imageResult2.Source = new BitmapImage(new Uri(image));
+            userControl11.imageResult2.Height = 600;
+            userControl11.imageResult2.Width = 600;
+
+
+
+            string filePath = "C:\\Users\\Yeomans\\Desktop\\images\\image.png";
+
+
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)userControl11.imageResult2.Source));
+            using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                encoder.Save(stream);
+
+        }
+
+       
 
     }
 }

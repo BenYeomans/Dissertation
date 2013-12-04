@@ -14,10 +14,12 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Maps.MapControl.WPF;
 
+
 //using Aerial_Imaging_UAV_Simulator.GeocodeService;
 using Aerial_Imaging_UAV_Simulator.ImageryService;
 using Aerial_Imaging_UAV_Simulator.SearchService;
 using Aerial_Imaging_UAV_Simulator.RouteService;
+using System.IO;
 
 namespace Aerial_Imaging_UAV_Simulator
 {
@@ -37,30 +39,33 @@ namespace Aerial_Imaging_UAV_Simulator
             bingmap.ZoomLevel = 10;
 
             bingmap.Center = new Microsoft.Maps.MapControl.WPF.Location(47.6421, -122.1420);
-            
+
         }
 
-            
 
-        public void setZoom(int zoom) {
+
+        public void setZoom(int zoom)
+        {
 
             bingmap.ZoomLevel = zoom;
-        
+
         }
 
-        public void setLocation(double lat, double longi) {
+        public void setLocation(double lat, double longi, int zoom)
+        {
 
             bingmap.Center.Latitude = lat;
             bingmap.Center.Longitude = longi;
-            bingmap.Center = new Microsoft.Maps.MapControl.WPF.Location(lat, longi);
-            
+            bingmap.ZoomLevel = 18;
+            bingmap.Center = new Microsoft.Maps.MapControl.WPF.Location(lat, longi, 18);
+
 
         }
-    
-        
 
 
-        private string GetImagery(string locationString)
+
+        //TODO change this method to accept the long and lat determined by the form , and move button to form 
+        public string GetImagery(double lat, double longi)
         {
             string key = "AiRFtOkxCuI_LQXyPmK8arEdFpqM0_8GRW4ufZBJt-p5LIF7BgeD7fLYT8hs8xl7";
             MapUriRequest mapUriRequest = new MapUriRequest();
@@ -71,19 +76,21 @@ namespace Aerial_Imaging_UAV_Simulator
 
             // Set the location of the requested image
             mapUriRequest.Center = new ImageryService.Location();
-            string[] digits = locationString.Split(',');
-            mapUriRequest.Center.Latitude = double.Parse(digits[0].Trim());
-            mapUriRequest.Center.Longitude = double.Parse(digits[1].Trim());
+            //string[] digits = locationString.Split(',');
+           // mapUriRequest.Center.Latitude = double.Parse(digits[0].Trim());
+            //mapUriRequest.Center.Longitude = double.Parse(digits[1].Trim());
+            mapUriRequest.Center.Latitude = lat;
+            mapUriRequest.Center.Longitude = longi;
 
             // Set the map style and zoom level
             MapUriOptions mapUriOptions = new MapUriOptions();
             mapUriOptions.Style = MapStyle.AerialWithLabels;
-            mapUriOptions.ZoomLevel = 19;
+            mapUriOptions.ZoomLevel = 18;
 
             // Set the size of the requested image in pixels
             mapUriOptions.ImageSize = new ImageryService.SizeOfint();
-            mapUriOptions.ImageSize.Height = 600;
-            mapUriOptions.ImageSize.Width = 600;
+            mapUriOptions.ImageSize.Height = 834;
+            mapUriOptions.ImageSize.Width = 900;
 
             mapUriRequest.Options = mapUriOptions;
 
@@ -93,20 +100,25 @@ namespace Aerial_Imaging_UAV_Simulator
             return mapUriResponse.Uri;
         }
 
-        private void RequestImage_Click(object sender, RoutedEventArgs e)
-        {
-            // Make label hidden and image visible
-            //labelResults.Visibility = Visibility.Hidden;
-            imageResult2.Visibility = Visibility.Visible;
-
-            //Get URI and set image
-            String imageURI = GetImagery(textInput.Text);
-            imageResult2.Source = new BitmapImage(new Uri(imageURI));
+       
             
-        }
+        //BitmapImage image = new BitmapImage(new Uri(imageURI));
 
+
+
+
+
+
+        
+    }
+        } 
+
+
+
+
+       
         
 
       
-    }
-}
+    
+

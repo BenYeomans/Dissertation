@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
               xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" 
              mc:Ignorable="d" Height="292.537" Width="562.687">
-    <Grid Margin="0,10,0,0">
+    <Grid x:Name="MyGrid" Margin="0,10,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="139*"/>
             <ColumnDefinition Width="169*"/>
@@ -13,15 +13,11 @@
             <ColumnDefinition Width="14*"/>
             <ColumnDefinition Width="36*"/>
         </Grid.ColumnDefinitions>
-
-
-        <TextBox x:Name="textInput" HorizontalAlignment="Left" Height="26" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="81"/>
         <Label x:Name="labelResults" HorizontalAlignment="Left" Height="44" VerticalAlignment="Top" Width="166" Margin="0,239,0,0" Grid.ColumnSpan="2">
             <Image x:Name="imageResults" Height="273" Width="543" Visibility="Hidden" Stretch="None"/>
         </Label>
-        <Button x:Name="RequestImage" Content="Take Image" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="73" Margin="0,27,0,0" Click="RequestImage_Click"/>
         <m:Map CredentialsProvider="AiRFtOkxCuI_LQXyPmK8arEdFpqM0_8GRW4ufZBJt-p5LIF7BgeD7fLYT8hs8xl7" Mode="AerialWithLabels" Center="52.2474, 0.7183" ZoomLevel="16" Margin="0,70,10,-13" Grid.ColumnSpan="5" AnimationLevel="Full" x:Name="bingmap">
-            <Image x:Name="imageResult2" HorizontalAlignment="Left" Height="206" VerticalAlignment="Top" Width="553" Margin="0,10,0,0"/>
+            <Image x:Name="imageResult2" HorizontalAlignment="Left" Height="206" VerticalAlignment="Top" Width="553" Margin="0,10,0,0" Visibility="Hidden"/>
         </m:Map>
     </Grid>
 </UserControl>
